@@ -2,6 +2,7 @@ package com.example.sportquizapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.sportquizapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
