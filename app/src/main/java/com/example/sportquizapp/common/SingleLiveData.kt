@@ -1,4 +1,4 @@
-package com.example.sportquizapp.presentation.common
+package com.example.sportquizapp.common
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
