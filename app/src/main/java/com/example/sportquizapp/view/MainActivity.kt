@@ -19,13 +19,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    /*lateinit var questionsList: ArrayList<QuestionModel>
+    lateinit var questionsList: ArrayList<QuestionModel>
     private var index:Int = 0
     lateinit var questionModel: QuestionModel
     private var correctAnswerCount:Int=0
     private var wrongAnswerCount:Int=0
     private var backPressedTime: Long = 0
-    private var backToast: Toast? = null*/
+    private var backToast: Toast? = null
 
     val viewModel: MainViewModel by viewModel()
 
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*questionsList= ArrayList()
+        questionsList= ArrayList()
         questionsList.add(QuestionModel("What is actually electricity?","A flow of water","A flow of air","A flow of electrons"," A flow of atoms","A flow of electrons"))
         questionsList.add(QuestionModel("What is the speed of sound?","120 km/h","1,200 km/h","400 km/h","700 km/h","1,200 km/h"))
         questionsList.add(QuestionModel("What is the main component of the sun?","Liquid lava","Gas","Molten iron","Rock","Gas"))
@@ -46,48 +46,58 @@ class MainActivity : AppCompatActivity() {
 
         setAllQuestions()
 
-        setTimer()*/
+        setTimer()
 
-        viewModel.timer.observe(this){
-            binding.tvTimer.text = it
-        }
-
-        viewModel.showGameResult.observe(this){
-            var intent= Intent(this, ResultActivity::class.java)
-
-            intent.putExtra("correct",it.first)
-            intent.putExtra("total",it.second)
-
-            startActivity(intent)
-        }
-
-        viewModel.question.observe(this){
-            binding.tvQuestions.text = it
-        }
-        viewModel.option1.observe(this){
-            binding.btnOption1.text = it
-        }
-        viewModel.option2.observe(this){
-            binding.btnOption2.text = it
-        }
-        viewModel.option3.observe(this){
-            binding.btnOption3.text = it
-        }
-        viewModel.option4.observe(this){
-            binding.btnOption4.text = it
-        }
 
     }
 
+    private fun setTimer() {
+        var duration: Long = TimeUnit.SECONDS.toMillis(15)
 
-    /*private fun gameResult() {
+
+        object : CountDownTimer(duration, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+
+                var sDuration: String = String.format(
+                    Locale.ENGLISH,
+                    "%02d:%02d",
+                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
+                    )
+                )
+
+                binding.tvTimer.text = sDuration
+
+            }
+
+            override fun onFinish() {
+                index++
+                if (index < questionsList.size) {
+                    questionModel = questionsList[index]
+                    setAllQuestions()
+                    resetBackground()
+                    enableButton()
+                    setTimer()
+
+                } else {
+
+                    gameResult()
+
+                }
+            }
+        }.start()
+    }
+
+
+    private fun gameResult() {
         var intent= Intent(this, ResultActivity::class.java)
 
         intent.putExtra("correct",correctAnswerCount.toString())
         intent.putExtra("total",questionsList.size.toString())
 
         startActivity(intent)
-    }*/
+    }
 
     private fun enableButton() {
         binding.btnOption1.isClickable=true
@@ -96,12 +106,12 @@ class MainActivity : AppCompatActivity() {
         binding.btnOption4.isClickable=true
     }
 
-   /* private fun resetBackground() {
+    private fun resetBackground() {
         binding.btnOption1.background=resources.getDrawable(R.drawable.button_background)
         binding.btnOption2.background=resources.getDrawable(R.drawable.button_background)
         binding.btnOption3.background=resources.getDrawable(R.drawable.button_background)
         binding.btnOption4.background=resources.getDrawable(R.drawable.button_background)
-    }*/
+    }
     fun option1Clicked(view: View){
         disableButton()
         if(questionModel.option1==questionModel.answer){
@@ -191,11 +201,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    /*private fun setAllQuestions() {
+    private fun setAllQuestions() {
         binding.tvQuestions.text=questionModel.question
         binding.btnOption1.text=questionModel.option1
         binding.btnOption2.text=questionModel.option2
         binding.btnOption3.text=questionModel.option3
         binding.btnOption4.text=questionModel.option4
-    }*/
+    }
 }
