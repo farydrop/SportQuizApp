@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private var wrongAnswerCount:Int=0
     private var backPressedTime: Long = 0
     private var backToast: Toast? = null*/
+    private var backPressedTime: Long = 0
+    private var backToast: Toast? = null
 
     val viewModel: MainViewModel by viewModel()
 
@@ -48,20 +50,20 @@ class MainActivity : AppCompatActivity() {
 
         setTimer()*/
 
-        viewModel.timer.observe(this){
+        viewModel.timer.observe(this) {
             binding.tvTimer.text = it
         }
 
-        viewModel.showGameResult.observe(this){
-            var intent= Intent(this, ResultActivity::class.java)
+        viewModel.showGameResult.observe(this) {
+            var intent = Intent(this, ResultActivity::class.java)
 
-            intent.putExtra("correct",it.first)
-            intent.putExtra("total",it.second)
+            intent.putExtra("correct", it.first)
+            intent.putExtra("total", it.second)
 
             startActivity(intent)
         }
 
-        viewModel.question.observe(this){
+        /*viewModel.question.observe(this){
             binding.tvQuestions.text = it
         }
         viewModel.option1.observe(this){
@@ -75,6 +77,28 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel.option4.observe(this){
             binding.btnOption4.text = it
+        }*/
+
+        viewModel.onEnable.observe(this) {
+            binding.btnOption1.isClickable = it
+            binding.btnOption2.isClickable = it
+            binding.btnOption3.isClickable = it
+            binding.btnOption4.isClickable = it
+        }
+
+        viewModel.onDisable.observe(this) {
+            binding.btnOption1.isClickable = it
+            binding.btnOption2.isClickable = it
+            binding.btnOption3.isClickable = it
+            binding.btnOption4.isClickable = it
+        }
+
+        viewModel.wrongAns.observe(this){
+            it.background = resources.getDrawable(R.drawable.wrong_background)
+        }
+
+        viewModel.correctAns.observe(this){
+            it.background = resources.getDrawable(R.drawable.right_background)
         }
 
     }
@@ -89,101 +113,97 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }*/
 
-    private fun enableButton() {
+    /*private fun enableButton() {
         binding.btnOption1.isClickable=true
         binding.btnOption2.isClickable=true
         binding.btnOption3.isClickable=true
         binding.btnOption4.isClickable=true
-    }
-
-   /* private fun resetBackground() {
-        binding.btnOption1.background=resources.getDrawable(R.drawable.button_background)
-        binding.btnOption2.background=resources.getDrawable(R.drawable.button_background)
-        binding.btnOption3.background=resources.getDrawable(R.drawable.button_background)
-        binding.btnOption4.background=resources.getDrawable(R.drawable.button_background)
     }*/
-    fun option1Clicked(view: View){
+
+    /* private fun resetBackground() {
+         binding.btnOption1.background=resources.getDrawable(R.drawable.button_background)
+         binding.btnOption2.background=resources.getDrawable(R.drawable.button_background)
+         binding.btnOption3.background=resources.getDrawable(R.drawable.button_background)
+         binding.btnOption4.background=resources.getDrawable(R.drawable.button_background)
+     }*/
+    fun option1Clicked(view: View) {
         disableButton()
-        if(questionModel.option1==questionModel.answer){
-            binding.btnOption1.background=resources.getDrawable(R.drawable.right_background)
+        if (questionModel.option1 == questionModel.answer) {
+            binding.btnOption1.background = resources.getDrawable(R.drawable.right_background)
 
 
             correctAns(binding.btnOption1)
 
-        }
-        else{
+        } else {
             wrongAns(binding.btnOption1)
         }
     }
 
-    private fun wrongAns(option: Button) {
-        option.background=resources.getDrawable(R.drawable.wrong_background)
+    /*private fun wrongAns(option: Button) {
+        option.background = resources.getDrawable(R.drawable.wrong_background)
 
         wrongAnswerCount++
     }
 
     private fun correctAns(option: Button) {
-        option.background=getDrawable(R.drawable.right_background)
+        option.background = getDrawable(R.drawable.right_background)
         correctAnswerCount++
-    }
+    }*/
 
-    private fun disableButton() {
+    /*private fun disableButton() {
         binding.btnOption1.isClickable=false
         binding.btnOption2.isClickable=false
         binding.btnOption3.isClickable=false
         binding.btnOption4.isClickable=false
-    }
+    }*/
 
-    fun option2Clicked(view:View){
+    /*fun option2Clicked(view: View) {
         disableButton()
-        if(questionModel.option2==questionModel.answer){
-            binding.btnOption2.background=resources.getDrawable(R.drawable.right_background)
+        if (questionModel.option2 == questionModel.answer) {
+            binding.btnOption2.background = resources.getDrawable(R.drawable.right_background)
 
 
             correctAns(binding.btnOption2)
 
-        }
-        else{
+        } else {
             wrongAns(binding.btnOption2)
         }
     }
-    fun option3Clicked(view:View){
-        disableButton()
-        if(questionModel.option3==questionModel.answer){
 
-            binding.btnOption3.background=resources.getDrawable(R.drawable.right_background)
+    fun option3Clicked(view: View) {
+        disableButton()
+        if (questionModel.option3 == questionModel.answer) {
+
+            binding.btnOption3.background = resources.getDrawable(R.drawable.right_background)
 
 
             correctAns(binding.btnOption3)
 
 
-        }
-        else{
+        } else {
             wrongAns(binding.btnOption3)
         }
     }
-    fun option4Clicked(view:View){
+
+    fun option4Clicked(view: View) {
         disableButton()
-        if(questionModel.option4==questionModel.answer){
-            binding.btnOption4.background=resources.getDrawable(R.drawable.right_background)
+        if (questionModel.option4 == questionModel.answer) {
+            binding.btnOption4.background = resources.getDrawable(R.drawable.right_background)
 
 
             correctAns(binding.btnOption4)
 
-        }
-        else{
+        } else {
             wrongAns(binding.btnOption4)
         }
-    }
+    }*/
 
     override fun onBackPressed() {
 
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             backToast?.cancel()
             finish()
-        }
-
-        else {
+        } else {
             backToast = Toast.makeText(baseContext, "DOUBLE PRESS TO QUIT GAME", Toast.LENGTH_SHORT)
             backToast?.show()
         }
