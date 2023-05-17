@@ -35,11 +35,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         questionsList= ArrayList()
-        questionsList.add(QuestionModel("What is actually electricity?","A flow of water","A flow of air","A flow of electrons"," A flow of atoms","A flow of electrons"))
-        questionsList.add(QuestionModel("What is the speed of sound?","120 km/h","1,200 km/h","400 km/h","700 km/h","1,200 km/h"))
-        questionsList.add(QuestionModel("What is the main component of the sun?","Liquid lava","Gas","Molten iron","Rock","Gas"))
-        questionsList.add(QuestionModel("Which of the following animals can run the fastest?","Cheetah","Leopard","Tiger","Lion","Cheetah"))
-        questionsList.add(QuestionModel("Which company is known for publishing the Mario video game?","Xbox","Nintendo","SEGA","Electronic Arts","Nintendo"))
+        questionsList.add(QuestionModel("What's the sanctioning body for Formula One?","TIFA","UN","FIA","USA","FIA"))
+        questionsList.add(QuestionModel("What does the \"formula\" mean in Formula One racing?","it's a formula for success","it's a set of regulations","it's the formula of the fuel","it's a method for changing tires","it's a set of regulations"))
+        questionsList.add(QuestionModel("What special thing do race organizers do with manhole covers for the Monaco Grand Prix?","take them off","weld them down","paint them hot pink","replace them with unicorns","weld them down"))
+        questionsList.add(QuestionModel("In what year was the first Formula One race held?","1950","1937","1955","1963","1950"))
+        questionsList.add(QuestionModel("What does FIA require for F1 cars' undertrays?","it curves at 10 degrees","it's completely flat between the two axles","it is wavy on the surface","it has a corrugated surface for resistance","it's completely flat between the two axles"))
 
         //questionsList.shuffle()
         questionModel= questionsList[index]
